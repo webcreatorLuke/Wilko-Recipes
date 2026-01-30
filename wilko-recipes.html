@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wilko Recipes - Homemade Goodness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFF8E7;
+            --warm-brown: #8B5A3C;
+            --chocolate: #3E2723;
+            --butter: #F4D03F;
+            --cookie-tan: #D4A373;
+            --soft-white: #FFFDF7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #FFE8CC 100%);
+            color: var(--chocolate);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Decorative flour dust particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 3%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.3) 0%, transparent 2%),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.35) 0%, transparent 2.5%),
+                radial-gradient(circle at 90% 20%, rgba(255,255,255,0.25) 0%, transparent 3%);
+            pointer-events: none;
+            z-index: 1;
+            animation: flourDust 20s ease-in-out infinite;
+        }
+
+        @keyframes flourDust {
+            0%, 100% { opacity: 0.6; transform: translateY(0); }
+            50% { opacity: 0.9; transform: translateY(-10px); }
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-family: 'Covered By Your Grace', cursive;
+            font-size: 5rem;
+            color: var(--warm-brown);
+            text-shadow: 3px 3px 0px rgba(244, 208, 63, 0.4);
+            margin-bottom: 10px;
+            animation: fadeInDown 1s ease-out;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 1.4rem;
+            color: var(--chocolate);
+            font-style: italic;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.3s forwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .recipe-card {
+            background: var(--soft-white);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 
+                0 20px 60px rgba(139, 90, 60, 0.15),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+            position: relative;
+            margin-top: 20px;
+            border: 3px solid var(--cookie-tan);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out 0.5s forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Cookie crumb decorations */
+        .recipe-card::before,
+        .recipe-card::after {
+            content: '🍪';
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.2;
+            animation: rotate 20s linear infinite;
+        }
+
+        .recipe-card::before {
+            top: -15px;
+            right: 40px;
+        }
+
+        .recipe-card::after {
+            bottom: -15px;
+            left: 40px;
+            animation-delay: -10s;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .recipe-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 3px dashed var(--cookie-tan);
+        }
+
+        .recipe-title {
+            font-family: 'Covered By Your Grace', cursive;
+            font-size: 3.5rem;
+            color: var(--chocolate);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .recipe-yield {
+            font-size: 1.3rem;
+            color: var(--warm-brown);
+            font-weight: 600;
+            background: var(--butter);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(139, 90, 60, 0.2);
+        }
+
+        .recipe-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Covered By Your Grace', cursive;
+            font-size: 2.5rem;
+            color: var(--warm-brown);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 70%;
+            background: var(--butter);
+            border-radius: 3px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            font-size: 1.25rem;
+            padding: 12px 0 12px 35px;
+            position: relative;
+            line-height: 1.6;
+            transition: transform 0.2s ease;
+        }
+
+        li:hover {
+            transform: translateX(5px);
+        }
+
+        li::before {
+            content: '🍪';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .instructions li::before {
+            content: '✓';
+            background: var(--butter);
+            color: var(--chocolate);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(139, 90, 60, 0.2);
+        }
+
+        .instructions li {
+            counter-increment: step;
+            padding-left: 45px;
+        }
+
+        .instructions {
+            counter-reset: step;
+        }
+
+        .instructions li::after {
+            content: counter(step);
+            position: absolute;
+            left: 5px;
+            top: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: var(--chocolate);
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #FFF4D6 0%, #FFE8B8 100%);
+            border-left: 5px solid var(--butter);
+            padding: 20px 25px;
+            margin-top: 30px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(139, 90, 60, 0.1);
+        }
+
+        .tip-box::before {
+            content: '👉 ';
+            font-size: 1.4rem;
+        }
+
+        .enjoy {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-top: 30px;
+            color: var(--warm-brown);
+            font-weight: 600;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--warm-brown);
+            font-family: 'Covered By Your Grace', cursive;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+
+            .recipe-card {
+                padding: 30px 25px;
+            }
+
+            .recipe-title {
+                font-size: 2.5rem;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            li {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Wilko Recipes</h1>
+        <p class="tagline">Homemade goodness, one batch at a time</p>
+    </header>
+
+    <div class="container">
+        <div class="recipe-card">
+            <div class="recipe-header">
+                <h2 class="recipe-title">
+                    <span>🍪</span>
+                    <span>Chocolate Chip Cookies</span>
+                    <span>🍪</span>
+                </h2>
+                <div class="recipe-yield">Makes 13 cookies</div>
+            </div>
+
+            <div class="recipe-section">
+                <h3 class="section-title">Ingredients</h3>
+                <ul>
+                    <li>½ cup butter (softened)</li>
+                    <li>½ cup brown sugar</li>
+                    <li>¼ cup white sugar</li>
+                    <li>1 egg</li>
+                    <li>1 tsp vanilla extract</li>
+                    <li>1½ cups all-purpose flour</li>
+                    <li>½ tsp baking soda</li>
+                    <li>¼ tsp salt</li>
+                    <li>¾ cup chocolate chips</li>
+                </ul>
+            </div>
+
+            <div class="recipe-section">
+                <h3 class="section-title">Instructions</h3>
+                <ul class="instructions">
+                    <li>Preheat oven to 350°F (175°C)</li>
+                    <li>Mix butter + both sugars until creamy</li>
+                    <li>Mix in egg + vanilla</li>
+                    <li>In a separate bowl, mix flour, baking soda, salt</li>
+                    <li>Combine wet + dry</li>
+                    <li>Stir in chocolate chips</li>
+                    <li>Scoop 13 equal dough balls</li>
+                    <li>Bake 10–12 minutes</li>
+                    <li>Cool for 5 minutes, then enjoy 😄</li>
+                </ul>
+
+                <div class="tip-box">
+                    About 1½ tablespoons each for perfect portions!
+                </div>
+            </div>
+
+            <div class="enjoy">
+                ✨ Enjoy your homemade cookies! ✨
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Made with love in the Wilko kitchen 🧡
+    </footer>
+</body>
+</html>
